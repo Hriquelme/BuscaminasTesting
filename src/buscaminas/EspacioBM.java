@@ -9,13 +9,13 @@ package buscaminas;
  *
  * @author Hugoriquelme
  */
-public class espacio{
+public class EspacioBM{
 
 
     private int minasAlrededor;
     private boolean esMina;
     private boolean revelado;
-    public espacio(){
+    public EspacioBM(){
 
         minasAlrededor=0;
         esMina=false;
@@ -27,7 +27,7 @@ public class espacio{
     }
     public void aumentarMinas(){
 
-        if(esMina==false){
+        if(!esMina){
             minasAlrededor++;
         }
     }
@@ -45,11 +45,12 @@ public class espacio{
     public String toString(){
 
         String res="*";
-        if(revelado==true){
+        if(revelado){
             res=""+minasAlrededor;
         }
-        if(esMina==true&&revelado==true)
-        res="X";
+        if(esMina&&revelado){
+            res="X";
+        }        
         return res;
     }
 }

@@ -1,0 +1,6 @@
+projectKey=buscaminastesting
+serverUrl=http://localhost:9000
+serverVersion=6.5.0.27846
+dashboardUrl=http://localhost:9000/dashboard/index/buscaminastesting
+ceTaskId=AV54OchH2XCq8trjJiEZ
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AV54OchH2XCq8trjJiEZ
