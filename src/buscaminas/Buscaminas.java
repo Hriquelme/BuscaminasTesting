@@ -15,7 +15,7 @@ public class Buscaminas {
 
     Scanner scan = new Scanner(System.in);
 
-    public static void main(String arg[]) {
+    public static void main(String[] arg) {
 
         Scanner scan = new Scanner(System.in);
         int filas;
@@ -23,7 +23,7 @@ public class Buscaminas {
         int numMinas;
         int contador;
         int c = 0;
-        espacio[][] Buscaminas;
+        EspacioBM[][] buscaminas;
         System.out.println("-" + "-" + "Buscaminas" + "-" + "-");
         System.out.print("Ingrese el numero de filas(5-50): ");
         filas = scan.nextInt();
@@ -44,18 +44,18 @@ public class Buscaminas {
         contador = (filas * columnas) - (numMinas);
         System.out.println("-" + "El numero de minas es: " + numMinas + "-");
         System.out.println("-" + "A jugar!!!" + "-");
-        Buscaminas = new espacio[columnas][filas];
-        Buscaminas = new Buscaminas().llenarTablero(Buscaminas, 0, 0, columnas, filas);
-        Buscaminas = new Buscaminas().colocarMinas(Buscaminas, numMinas, columnas, filas);
-        Buscaminas = new Buscaminas().minasAlrededor(Buscaminas, 0, 0, columnas, filas);
-        Buscaminas = new Buscaminas().juego(Buscaminas, columnas, filas, contador);
+        buscaminas = new EspacioBM[columnas][filas];
+        buscaminas = new Buscaminas().llenarTablero(buscaminas, 0, 0, columnas, filas);
+        buscaminas = new Buscaminas().colocarMinas(buscaminas, numMinas, columnas, filas);
+        buscaminas = new Buscaminas().minasAlrededor(buscaminas, 0, 0, columnas, filas);
+        buscaminas = new Buscaminas().juego(buscaminas, columnas, filas, contador);
     }
 
-    public espacio[][] llenarTablero(espacio[][] buscaminas, int i, int j, int c, int f) {
+    public EspacioBM[][] llenarTablero(EspacioBM[][] buscaminas, int i, int j, int c, int f) {
 
         if (j < f) {
             if (i < c) {
-                buscaminas[i][j] = new espacio();
+                buscaminas[i][j] = new EspacioBM();
                 buscaminas = llenarTablero(buscaminas, ++i, j, c, f);
             } else {
                 i = 0;
@@ -65,12 +65,12 @@ public class Buscaminas {
         return buscaminas;
     }
 
-    public espacio[][] colocarMinas(espacio[][] buscaminas, int n, int c, int f) {
+    public EspacioBM[][] colocarMinas(EspacioBM[][] buscaminas, int n, int c, int f) {
 
         int azar1 = (int) (Math.random() * (c - 1));
         int azar2 = (int) (Math.random() * (f - 1));
         if (n > 0) {
-            if (buscaminas[azar1][azar2].verMina() == false) {
+            if (!buscaminas[azar1][azar2].verMina() ) {
                 buscaminas[azar1][azar2].colocarMina();
                 n--;
             }
@@ -79,11 +79,11 @@ public class Buscaminas {
         return buscaminas;
     }
 
-    public espacio[][] minasAlrededor(espacio[][] buscaminas, int i, int j, int c, int f) {
+    public EspacioBM[][] minasAlrededor(EspacioBM[][] buscaminas, int i, int j, int c, int f) {
 
         if (j < f) {
             if (i < c) {
-                if (buscaminas[i][j].verMina() == true) {
+                if (buscaminas[i][j].verMina()) {
                     if (i > 0) {
                         buscaminas[i - 1][j].aumentarMinas();
                         if (j > 0) {
@@ -118,7 +118,7 @@ public class Buscaminas {
         return buscaminas;
     }
 
-    public void imprimir(espacio[][] buscaminas, int i, int j, int c, int f) {
+    public void imprimir(EspacioBM[][] buscaminas, int i, int j, int c, int f) {
 
         if (j < f) {
             if (i < c) {
@@ -132,7 +132,7 @@ public class Buscaminas {
         }
     }
 
-    public espacio[][] juego(espacio[][] buscaminas, int columnas, int filas, int contador) {
+    public EspacioBM[][] juego(EspacioBM[][] buscaminas, int columnas, int filas, int contador) {
 
         imprimir(buscaminas, 0, 0, columnas, filas);
         System.out.println("-" + "Ingrese el numero de fila y columna que desea explorar" + "-");
@@ -141,13 +141,13 @@ public class Buscaminas {
         System.out.print("Ingrese el numero de la columna: ");
         int c = scan.nextInt();
         if (f <= filas && c <= columnas) {
-            if (buscaminas[c - 1][f - 1].verRevelado() == false) {
+            if (!buscaminas[c - 1][f - 1].verRevelado()) {
                 buscaminas[c - 1][f - 1].cambiarEstado();
                 contador--;
             }
             if (contador == 0) {
                 System.out.println("-" + "-" + "GANASTE!!!" + "-" + "-" + "FELICIDADES!!!");
-            } else if (buscaminas[c - 1][f - 1].verMina() == true) {
+            } else if (buscaminas[c - 1][f - 1].verMina()) {
                 imprimir(buscaminas, 0, 0, columnas, filas);
                 System.out.println("-" + "-" + "BOOOOOOOOM!!!!!" + "-" + "-" + "perdiste el juego!!!");
             } else {
